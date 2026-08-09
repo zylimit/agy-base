@@ -1,0 +1,188 @@
+{
+  "version": 1,
+  "harnessVersion": "2.0.0",
+  "platform": "Antigravity (AGY)",
+  "hashAlgorithm": "sha256-lf-v1",
+  "files": [
+    {
+      "path": ".agents/EVOLUTION.md",
+      "sha256": "515f85819ce1932c21bc0dadd1fcc5640ce1c4981955b6b9addf90406530b43e",
+      "bytes": 838
+    },
+    {
+      "path": ".agents/feedback/FEEDBACK-INDEX.md",
+      "sha256": "4c607a9ec780ba34486b03fb3b33892293bfb7c84d484961e28463e2c9ed920d",
+      "bytes": 286
+    },
+    {
+      "path": ".agents/harness/arch-checker.js",
+      "sha256": "357aa1d418792a4f51c514645b176fbe745a9dd42fbb2ec7edd3fa8ce1aa513c",
+      "bytes": 3616
+    },
+    {
+      "path": ".agents/harness/context-packer.js",
+      "sha256": "722e8bc1d98df464b909fb62c845d00370a41caeac70e9cba366129ef28e45a1",
+      "bytes": 1315
+    },
+    {
+      "path": ".agents/harness/dfx-validator.js",
+      "sha256": "42b58ac599f453428a446f56151fe18af36e6ec3c6744c3b1b9ef19ed58a9518",
+      "bytes": 2781
+    },
+    {
+      "path": ".agents/harness/fast-mode.js",
+      "sha256": "7b272978a557df31a19a9f2fd4934d8a251abbb3a0e57aa278508e08d75b316b",
+      "bytes": 1417
+    },
+    {
+      "path": ".agents/harness/hook-handlers.js",
+      "sha256": "07aa3880ca08ddd9f7328b37bfd71bba2e933954c02a7240e0b0553f378d7a52",
+      "bytes": 2049
+    },
+    {
+      "path": ".agents/harness/module-catalog.json",
+      "sha256": "70ec8e13287d9d79a4adbe0d5020ea5209ee8125bbaf0bf3ac833f5d86112960",
+      "bytes": 1260
+    },
+    {
+      "path": ".agents/harness/supervisor.js",
+      "sha256": "f7568103fee7be3f13d314cf2059f945fc02ee85b292bec374839d7d6855b200",
+      "bytes": 1835
+    },
+    {
+      "path": ".agents/harness/verification-matrix.json",
+      "sha256": "ad746648822bd03febe3cb4cea8448126db25830082441d3dc9dfa7803768ce2",
+      "bytes": 668
+    },
+    {
+      "path": ".agents/hooks.json",
+      "sha256": "61d73d62ca9abf49f6d9d7475a22d9fa45a30154c1474e854f9dc09d79fb195e",
+      "bytes": 1113
+    },
+    {
+      "path": ".agents/mcp_config.json",
+      "sha256": "31f5fd94055ea45c353a24cd06eab7abfdae554dbb6a16f8ed543b972c3acb82",
+      "bytes": 229
+    },
+    {
+      "path": ".agents/rules/anti-performativity.md",
+      "sha256": "9f3fb65be03c14e67f48b5b31c0cc4b2efc01e8b7ec7487889a35026c9cbe3c3",
+      "bytes": 760
+    },
+    {
+      "path": ".agents/rules/architecture-governance.md",
+      "sha256": "8bb9f18ab53c96d3e7ebdd41c78934773f3d2357055fffa8a15f430044d7c90a",
+      "bytes": 759
+    },
+    {
+      "path": ".agents/rules/harness-large-repo.md",
+      "sha256": "293f2d3cbfe8b31f3a311c55c1437f8749a063e1e153b27f7a06af22727d4536",
+      "bytes": 975
+    },
+    {
+      "path": ".agents/rules/quality-attributes.md",
+      "sha256": "30ccb3d0048f40210dddf86b0c08c1cb45cde63dde7a0cd231e7f478576a9c6c",
+      "bytes": 1572
+    },
+    {
+      "path": ".agents/rules/subagent-contracts.md",
+      "sha256": "bde290cab238039b0d2f6e170e513a03e30602ac90fe977461a6729b1b50fec4",
+      "bytes": 747
+    },
+    {
+      "path": ".agents/scripts/doctor.sh",
+      "sha256": "9156a00a319a8b51f313f60df31a439a9bcdc3707909d05f1619cabe37e03752",
+      "bytes": 1136
+    },
+    {
+      "path": ".agents/scripts/fast-mode.ps1",
+      "sha256": "992911dd26ac6b3b574a5f9dd2b5afb2b868db515df530747bb36de3b8c72a18",
+      "bytes": 51
+    },
+    {
+      "path": ".agents/scripts/fast-mode.sh",
+      "sha256": "77ef8d0967ca3ebb82d6fb1a03ffb89ab345278e9827e88d61da3d8884788752",
+      "bytes": 72
+    },
+    {
+      "path": ".agents/skills/adversarial-review/SKILL.md",
+      "sha256": "5a348fbc086b7b0c47e5329cf0040b76d75fd79d1ddde1754c4a39ebdda878b3",
+      "bytes": 474
+    },
+    {
+      "path": ".agents/skills/arch-designer/SKILL.md",
+      "sha256": "e24ffee40a82a6951650ad6bb4fed6ac735473f1acf1e9b4a61cb763024e611a",
+      "bytes": 455
+    },
+    {
+      "path": ".agents/skills/branch-finisher/SKILL.md",
+      "sha256": "3c19bd96a5139afe16400a07c62ba0e30e1e857176a3b11678ff898eba99e0f3",
+      "bytes": 334
+    },
+    {
+      "path": ".agents/skills/bug-fixer/SKILL.md",
+      "sha256": "55e2ae228eee515e042f5cb822408a331c436eeec748a3ae5ab0af47dfaa6fa1",
+      "bytes": 372
+    },
+    {
+      "path": ".agents/skills/code-review/SKILL.md",
+      "sha256": "3dbd7946c912a7c5d9cad7e71a48ffffec43bcffa92e7f90ccaace1588270fb0",
+      "bytes": 382
+    },
+    {
+      "path": ".agents/skills/dev-builder/SKILL.md",
+      "sha256": "2b585b99f7de74c523cc02dc8e2f4c6e679a0a6c14da514aff6de605b5320984",
+      "bytes": 370
+    },
+    {
+      "path": ".agents/skills/dev-planner/SKILL.md",
+      "sha256": "e3f38c25b55f516c7ed737eb2287809b0fb100d7b0b4270c8512e3a4ece0839b",
+      "bytes": 398
+    },
+    {
+      "path": ".agents/skills/dfx-designer/SKILL.md",
+      "sha256": "fc46dc2a4860fe6acda590e0e34c91c48ac476afb08ee45ec0a59f8eb855c98e",
+      "bytes": 458
+    },
+    {
+      "path": ".agents/skills/evolution-engine/SKILL.md",
+      "sha256": "f3bf471202ca6ea5a8a582c113bd4935c98a829fcd3d6067b31dfb0e080043c0",
+      "bytes": 277
+    },
+    {
+      "path": ".agents/skills/feedback-writer/SKILL.md",
+      "sha256": "022e4183652706a4cf8232bc718d4ac0157a47636a63dda51ad7d15d0cd58d7b",
+      "bytes": 306
+    },
+    {
+      "path": ".agents/skills/large-repo-harness/SKILL.md",
+      "sha256": "08653f70d804805b186f25309a961f7b6bef95aadc09e29f43e381736859ea98",
+      "bytes": 360
+    },
+    {
+      "path": ".agents/skills/product-spec-builder/SKILL.md",
+      "sha256": "4ec315aa98355b10f7e49a75e646b71b31f496397503142e5c094491e8995e9d",
+      "bytes": 734
+    },
+    {
+      "path": ".agents/skills/progress-recorder/SKILL.md",
+      "sha256": "2ac7437b607f8410e9324b8fd117ca1fe3b0cbcb9304bd4fb622d7de93cfdfc1",
+      "bytes": 342
+    },
+    {
+      "path": ".agents/skills/release-builder/SKILL.md",
+      "sha256": "c499ce02b89b732387656c531190463f13c5bb623a48e4f838105f4e3b096a94",
+      "bytes": 296
+    },
+    {
+      "path": ".agents/skills/skill-builder/SKILL.md",
+      "sha256": "e99c54dc4709eecac706a93c35b3e464e30cdc0ae158c2cfc88e12d8cdc34ade",
+      "bytes": 320
+    },
+    {
+      "path": ".agents/skills/test-builder/SKILL.md",
+      "sha256": "d19af409b9559c7b138fbb570ea914db9b0c66357bf413587629ee7910bb2f9e",
+      "bytes": 328
+    }
+  ]
+}

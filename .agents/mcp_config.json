@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "agy-harness-tools": {
+      "command": "node",
+      "args": [
+        ".agents/harness/arch-checker.js",
+        "mcp-server"
+      ],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}

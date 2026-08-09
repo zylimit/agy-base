@@ -1,0 +1,19 @@
+# Antigravity Harness State
+.agents/harness-state/
+.agents/logs/
+.agents/task/
+.task/
+*.log
+
+# Dependency & Environment
+node_modules/
+dist/
+build/
+.env
+.env.local
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
