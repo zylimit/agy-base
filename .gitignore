@@ -1,4 +1,5 @@
 # Antigravity Harness State
+.agents/.agents
 .agents/harness-state/
 .agents/logs/
 .agents/task/

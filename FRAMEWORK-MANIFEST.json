@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "harnessVersion": "2.0.0",
+  "harnessVersion": "2.2.0",
   "platform": "Antigravity (AGY)",
   "hashAlgorithm": "sha256-lf-v1",
   "files": [
@@ -56,8 +56,8 @@
     },
     {
       "path": ".agents/hooks.json",
-      "sha256": "61d73d62ca9abf49f6d9d7475a22d9fa45a30154c1474e854f9dc09d79fb195e",
-      "bytes": 1113
+      "sha256": "20f2ec80e74b89ed722b57921f077de121bf217e3bad90e62e4a31ad2acd5f8d",
+      "bytes": 1081
     },
     {
       "path": ".agents/mcp_config.json",
@@ -75,9 +75,29 @@
       "bytes": 759
     },
     {
+      "path": ".agents/rules/design-system.md",
+      "sha256": "372462dd3232339f8545c8fdf34397373ffaa9c1c22754ccdfc5cb970d4ae94c",
+      "bytes": 1684
+    },
+    {
+      "path": ".agents/rules/domain-rulings.md",
+      "sha256": "b70af5b083e1ff08591d6e4e9144142eabf1b08ce2776ca0c5fbbf25665f03ce",
+      "bytes": 13130
+    },
+    {
       "path": ".agents/rules/harness-large-repo.md",
       "sha256": "293f2d3cbfe8b31f3a311c55c1437f8749a063e1e153b27f7a06af22727d4536",
       "bytes": 975
+    },
+    {
+      "path": ".agents/rules/interview-principles.md",
+      "sha256": "f0bd49d3c06217b4dea635a03b4160a9fb3a1aa679bab5d4eaa17b532724c29a",
+      "bytes": 8620
+    },
+    {
+      "path": ".agents/rules/lean-engineering.md",
+      "sha256": "a249bd6cb406f1757e838961942e434db3179ffac85bff9940ab507ee79a647f",
+      "bytes": 4123
     },
     {
       "path": ".agents/rules/quality-attributes.md",
@@ -105,44 +125,184 @@
       "bytes": 72
     },
     {
+      "path": ".agents/skills/adversarial-review/RED-BLUE-REVIEW.md",
+      "sha256": "5148ba88d362532389c641c148c8e2d9b23b2d5f33448e454962fd5b24817b90",
+      "bytes": 1970
+    },
+    {
       "path": ".agents/skills/adversarial-review/SKILL.md",
-      "sha256": "5a348fbc086b7b0c47e5329cf0040b76d75fd79d1ddde1754c4a39ebdda878b3",
-      "bytes": 474
+      "sha256": "05afadd73cb0705d61ec492326e5dc505812c89f406e2cae0c509a302769cb79",
+      "bytes": 2058
+    },
+    {
+      "path": ".agents/skills/adversarial-review/red-blue-review.sh",
+      "sha256": "b1df8472c1d5b4ba830f622a79b86826b8f53ae52ac56d23b1c215a3f7e9edca",
+      "bytes": 4821
+    },
+    {
+      "path": ".agents/skills/adversarial-review/test-red-blue-review.sh",
+      "sha256": "feb23619c45441f541dd662975caed43d0cb7ac458011779451108d7406c84b3",
+      "bytes": 4553
     },
     {
       "path": ".agents/skills/arch-designer/SKILL.md",
-      "sha256": "e24ffee40a82a6951650ad6bb4fed6ac735473f1acf1e9b4a61cb763024e611a",
-      "bytes": 455
+      "sha256": "2ee16031dbfd6ff7afb392b8c74710cff002c05fb66aab0af8eac81a7711f79f",
+      "bytes": 4684
+    },
+    {
+      "path": ".agents/skills/arch-designer/examples/after-sales-dispatch-arch.md",
+      "sha256": "dcf63d6fbe96b3d75a2b37275a409eb597a1b0846a19b2691c21904cdc5d3d88",
+      "bytes": 15797
+    },
+    {
+      "path": ".agents/skills/arch-designer/references/collaboration-walkthrough.md",
+      "sha256": "ccf732ea2a1a3316bb9a3ae9f4ca646b7930cd14c51907261c940ee48de56365",
+      "bytes": 8772
+    },
+    {
+      "path": ".agents/skills/arch-designer/references/decision-evaluation.md",
+      "sha256": "bb61cd4969d9573c09028bcb2e9f2d994bc6f59531e1ec34901571adb571b258",
+      "bytes": 9461
+    },
+    {
+      "path": ".agents/skills/arch-designer/templates/architecture-design-template.md",
+      "sha256": "1cc1ece0a6c1324bd002c5ae43c21a14e7b02b7bd4e9b979ded8d3bad058df0f",
+      "bytes": 6340
     },
     {
       "path": ".agents/skills/branch-finisher/SKILL.md",
-      "sha256": "3c19bd96a5139afe16400a07c62ba0e30e1e857176a3b11678ff898eba99e0f3",
-      "bytes": 334
+      "sha256": "fde90c8b8531e46df3bc5198e232fd52a356b61eb4dc52b90cf9d28af2ca3f9a",
+      "bytes": 1229
     },
     {
       "path": ".agents/skills/bug-fixer/SKILL.md",
-      "sha256": "55e2ae228eee515e042f5cb822408a331c436eeec748a3ae5ab0af47dfaa6fa1",
-      "bytes": 372
+      "sha256": "e2ebddb8620abb17e9cb6477210e2892706caa1ab04e119a4620d8b9dc0f0e01",
+      "bytes": 2742
+    },
+    {
+      "path": ".agents/skills/bug-fixer/references/comparison-and-experiments.md",
+      "sha256": "e93a049f71cb90ed4f0a4455608742fe1a772750466666de5cffafb3743a93ad",
+      "bytes": 3685
     },
     {
       "path": ".agents/skills/code-review/SKILL.md",
-      "sha256": "3dbd7946c912a7c5d9cad7e71a48ffffec43bcffa92e7f90ccaace1588270fb0",
-      "bytes": 382
+      "sha256": "a03844aad5f79a97e0007415cee06e10628d35cbcf685697cb976df25d8b7ca5",
+      "bytes": 3688
+    },
+    {
+      "path": ".agents/skills/design-brief-builder/SKILL.md",
+      "sha256": "7dfbefe59c7eb204628b7f9397d16a2d27c06366f69615200d2a61f9015fa467",
+      "bytes": 13883
+    },
+    {
+      "path": ".agents/skills/design-brief-builder/examples/after-sales-dispatch-DESIGN.md",
+      "sha256": "4dd71132caea8ad89257a02ac5c33970365efe1d8ba13c43d0a7487ed460cf70",
+      "bytes": 7404
+    },
+    {
+      "path": ".agents/skills/design-brief-builder/examples/after-sales-dispatch-brief.md",
+      "sha256": "ecf48c4e11dd7bc1cb6901dbf2fb39abf411cfe942b982f122335664996ffe95",
+      "bytes": 14931
+    },
+    {
+      "path": ".agents/skills/design-brief-builder/references/agent-ux-patterns.md",
+      "sha256": "6f76ef4e910cd16ee509bf29810cf85897bf3b2b4cfd3ab7f705d6620982db8b",
+      "bytes": 4887
+    },
+    {
+      "path": ".agents/skills/design-brief-builder/references/question-bank.md",
+      "sha256": "e9944290c30a3bd075ae2755dca55d74943403a4ec38307cd6797f5ab500cfb5",
+      "bytes": 26932
+    },
+    {
+      "path": ".agents/skills/design-brief-builder/references/style-vocabulary.md",
+      "sha256": "020d2ac52484ac0b4674921256226e0100c710e254749c317d9b02cec6c32dd6",
+      "bytes": 6935
+    },
+    {
+      "path": ".agents/skills/design-brief-builder/references/ui-quality-floor.md",
+      "sha256": "cbd224b457adf01f7771ba970fcff1867cf82495cb28e32d2abdd27e7e36106b",
+      "bytes": 6535
+    },
+    {
+      "path": ".agents/skills/design-brief-builder/references/workflow-0-1.md",
+      "sha256": "1e8b0c2e8bddb1e4bcdafe1a234319eca02a0bac7845100308d098e376e731c7",
+      "bytes": 5747
+    },
+    {
+      "path": ".agents/skills/design-brief-builder/references/workflow-iteration.md",
+      "sha256": "de80737245f54dac5344b7eb967fec03175f0adedaf5dafd68b83b4f4bd970db",
+      "bytes": 1882
+    },
+    {
+      "path": ".agents/skills/design-brief-builder/templates/design-brief-template.md",
+      "sha256": "c0196d491bdb40b8276144a8e75e119d414a4fa4682f7acfd04bcf1bd2684c66",
+      "bytes": 9800
+    },
+    {
+      "path": ".agents/skills/design-brief-builder/templates/design-md-template.md",
+      "sha256": "a434c622538a1d4a008278cb746e5db56c0de0afde2b44b869a9045cdb20cc65",
+      "bytes": 8160
+    },
+    {
+      "path": ".agents/skills/design-maker/SKILL.md",
+      "sha256": "4528e17736a6562ab776b87ce57d3e0e869fc072d2b0578a1c7f1a8c89cdbaf0",
+      "bytes": 17131
     },
     {
       "path": ".agents/skills/dev-builder/SKILL.md",
-      "sha256": "2b585b99f7de74c523cc02dc8e2f4c6e679a0a6c14da514aff6de605b5320984",
-      "bytes": 370
+      "sha256": "5a964965247b29adbb955eb1638205f6d41673f5e6818269df1697922c912c40",
+      "bytes": 4023
+    },
+    {
+      "path": ".agents/skills/dev-builder/references/async-proofreading-case.md",
+      "sha256": "23a0a597ad140a1d8e7fc816420e4c9a9d5559fd6204e70d3bd6d80256a5dfdc",
+      "bytes": 6420
+    },
+    {
+      "path": ".agents/skills/dev-builder/references/state-and-result-chain.md",
+      "sha256": "a8b1a7fe5feedc4df99d3a6c0463db37ba3347c1882b19e7cbaf77a6cef8d46e",
+      "bytes": 4697
     },
     {
       "path": ".agents/skills/dev-planner/SKILL.md",
-      "sha256": "e3f38c25b55f516c7ed737eb2287809b0fb100d7b0b4270c8512e3a4ece0839b",
-      "bytes": 398
+      "sha256": "ff985e4a0c621348f7f2f1605a9adeb88671c81d40a1b3be0272f77db6b565fd",
+      "bytes": 3404
+    },
+    {
+      "path": ".agents/skills/dev-planner/references/acceptance-and-dependencies.md",
+      "sha256": "c5dfe197314ef8be2624edcbbec66e560c88ec54c957a3ecdce4808e4a9a2e1d",
+      "bytes": 7371
+    },
+    {
+      "path": ".agents/skills/dev-planner/templates/dev-plan-template.md",
+      "sha256": "5fae6c9fd60d69dccd6b36a0194c52ffa5bb2c65402f4d35e996436e7478ab40",
+      "bytes": 7701
     },
     {
       "path": ".agents/skills/dfx-designer/SKILL.md",
-      "sha256": "fc46dc2a4860fe6acda590e0e34c91c48ac476afb08ee45ec0a59f8eb855c98e",
-      "bytes": 458
+      "sha256": "57f53ae9a9e9404e33921799ffb257598579192121121d0e63468129fadf03ea",
+      "bytes": 6379
+    },
+    {
+      "path": ".agents/skills/dfx-designer/examples/after-sales-dispatch-dfx.md",
+      "sha256": "cef3f273ea34833ade35d09a5a531eae8db1236baa80ac4b00bbdc53e5890313",
+      "bytes": 10149
+    },
+    {
+      "path": ".agents/skills/dfx-designer/references/measurement-methods.md",
+      "sha256": "563781f67af0066c75bf11d4b846362e9ebe85405ab1d86f65c68b90197bb58d",
+      "bytes": 13470
+    },
+    {
+      "path": ".agents/skills/dfx-designer/templates/dfx-spec-template.md",
+      "sha256": "b11b2f4d37f9a466f6779208ff0400f128c42e0aaca2ba8c7632deeb899e5d2b",
+      "bytes": 8484
+    },
+    {
+      "path": ".agents/skills/domain-rulings/SKILL.md",
+      "sha256": "d073e53cd7375ce65979ea579dc451311af0294617a25842e453b25972f597ce",
+      "bytes": 10725
     },
     {
       "path": ".agents/skills/evolution-engine/SKILL.md",
@@ -161,8 +321,68 @@
     },
     {
       "path": ".agents/skills/product-spec-builder/SKILL.md",
-      "sha256": "4ec315aa98355b10f7e49a75e646b71b31f496397503142e5c094491e8995e9d",
-      "bytes": 734
+      "sha256": "6825d312ae65df72c2189e414e0c28ec63bb5c80a9d93040b8ee43c25d0954b4",
+      "bytes": 6988
+    },
+    {
+      "path": ".agents/skills/product-spec-builder/examples/after-sales-dispatch.md",
+      "sha256": "858ef55162acbd1b8ba14f120dc37d51c5556327f2daf3b9702dc05b33ca1ef8",
+      "bytes": 12813
+    },
+    {
+      "path": ".agents/skills/product-spec-builder/references/discovery-examples.md",
+      "sha256": "29e3cf459440b3e3b811baf3dc710ac4ec3af4ac3017210314f089930f87faa3",
+      "bytes": 4105
+    },
+    {
+      "path": ".agents/skills/product-spec-builder/references/discovery-methods.md",
+      "sha256": "ebafdd6e90403a4fde1b107061200b7a276ae93d96d7fe8a55baf1531528c516",
+      "bytes": 11394
+    },
+    {
+      "path": ".agents/skills/product-spec-builder/references/elicitation-menu.md",
+      "sha256": "c2fe5349e4f664f68a98bc8bb68bca540852f6ebfa95fe210437ec3d60680833",
+      "bytes": 3197
+    },
+    {
+      "path": ".agents/skills/product-spec-builder/references/interview-principles.md",
+      "sha256": "f0bd49d3c06217b4dea635a03b4160a9fb3a1aa679bab5d4eaa17b532724c29a",
+      "bytes": 8620
+    },
+    {
+      "path": ".agents/skills/product-spec-builder/references/question-bank.md",
+      "sha256": "3a563002aab08abf34b48dbe44bc648b0d4a2a8478f8ab88dc94521d0d8e9170",
+      "bytes": 18307
+    },
+    {
+      "path": ".agents/skills/product-spec-builder/references/reservation-case.md",
+      "sha256": "63d1f3d6077f14a8e6cfc1efd6069ddfe71f61666c764e9628d5deb5f15c9eeb",
+      "bytes": 4343
+    },
+    {
+      "path": ".agents/skills/product-spec-builder/references/spec-self-review.md",
+      "sha256": "a3a6e27bf1eb51318664154b15df5f06f798ab903b2b742ef7f7e2cb6f060156",
+      "bytes": 3807
+    },
+    {
+      "path": ".agents/skills/product-spec-builder/references/workflow-0-1.md",
+      "sha256": "cceaed8170a6331ff300cb35e884398a4ad44862b721f0e8305b6e380113d553",
+      "bytes": 4896
+    },
+    {
+      "path": ".agents/skills/product-spec-builder/references/workflow-iteration.md",
+      "sha256": "e8b111d4c3f24e0f0deaeb8461a5e3d61994803ce6aa68880ec62cc71ac0c4c3",
+      "bytes": 4576
+    },
+    {
+      "path": ".agents/skills/product-spec-builder/templates/changelog-template.md",
+      "sha256": "7835a2be36e03f8911e397e4d9fcc6155ace4507920bd027f16f5cff23ab557b",
+      "bytes": 3330
+    },
+    {
+      "path": ".agents/skills/product-spec-builder/templates/product-spec-template.md",
+      "sha256": "8ac6811b9a97a40eb0b659fa7aa45cba4b7c7d7973d4c091023b412b665f09b9",
+      "bytes": 9092
     },
     {
       "path": ".agents/skills/progress-recorder/SKILL.md",
@@ -171,8 +391,13 @@
     },
     {
       "path": ".agents/skills/release-builder/SKILL.md",
-      "sha256": "c499ce02b89b732387656c531190463f13c5bb623a48e4f838105f4e3b096a94",
-      "bytes": 296
+      "sha256": "240f4edfb4f57dba6dc8d865a2ed2806f149b71aeb9c391daeece6055e979c19",
+      "bytes": 2686
+    },
+    {
+      "path": ".agents/skills/release-builder/references/artifact-and-recovery.md",
+      "sha256": "e6177499c78261f0467c65e75573e54e1a188adc0e04831662d674c9e5ed5ee7",
+      "bytes": 4990
     },
     {
       "path": ".agents/skills/skill-builder/SKILL.md",
@@ -181,8 +406,68 @@
     },
     {
       "path": ".agents/skills/test-builder/SKILL.md",
-      "sha256": "d19af409b9559c7b138fbb570ea914db9b0c66357bf413587629ee7910bb2f9e",
-      "bytes": 328
+      "sha256": "85ea9d5a6e446372b469ec57c3e8d410617016aeeb4443868a2ff3e972a571b7",
+      "bytes": 4535
+    },
+    {
+      "path": ".agents/skills/test-builder/references/independent-oracles-and-evidence.md",
+      "sha256": "5e4e214a94c74474501fd950733d0e792cd248c879c61c97665eda5f42d39621",
+      "bytes": 6022
+    },
+    {
+      "path": ".agents/skills/test-builder/references/risk-and-lifecycle.md",
+      "sha256": "fbe0d33a0ada05addbc5faf9a7b2080fd5fd9c3d874fafc035a5a0cf97690a20",
+      "bytes": 5449
+    },
+    {
+      "path": ".agents/skills/test-builder/templates/test-scaffold.md",
+      "sha256": "9241f1e036280815921978ee3f30127227630ca1a5c8f9a0aca8ebf6ab586a6f",
+      "bytes": 6502
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "b102969350ea9146a9855ae4e67936466e76a2217ffe1b607fec30938cecbea1",
+      "bytes": 11518
+    },
+    {
+      "path": "ARCHITECTURE.md",
+      "sha256": "6cedf0b50c8cba5035ed0be3a4f868617196e1a3880747b7b303ad5842d17adb",
+      "bytes": 6276
+    },
+    {
+      "path": "DEV-PLAN.md",
+      "sha256": "59db9c5fae716823b2f3b5f47ad92a0d8078497de9afb305dc735abf2af44d46",
+      "bytes": 1369
+    },
+    {
+      "path": "GEMINI.md",
+      "sha256": "6f1e4a90c93c7e7ac3b47d14949169facacb85e5d98ad7cd325bfea86d8fb959",
+      "bytes": 2463
+    },
+    {
+      "path": "Product-Spec-CHANGELOG.md",
+      "sha256": "9951de2e460e49ae3f47e1af6fb90fdfb2a18f0d36e1b8584378529f31e0b3de",
+      "bytes": 418
+    },
+    {
+      "path": "Product-Spec.md",
+      "sha256": "35e54618f0d69c7490756d71dd0213461239540e6dfdb6a6ec33cb91227660f9",
+      "bytes": 1294
+    },
+    {
+      "path": "README.md",
+      "sha256": "1898635e1054d4631c956761e281c7523b649a6b16517140bf63b2d29a110494",
+      "bytes": 7286
+    },
+    {
+      "path": "package.json",
+      "sha256": "25be683e4daca96498eac3e45e1cbe5a26f572934dc6218f67c2c32b373163fa",
+      "bytes": 980
+    },
+    {
+      "path": "progress.md",
+      "sha256": "8b24895672fb2a94b607aa740f1aa684466481369aa46f14b5106048ee08c595",
+      "bytes": 3635
     }
   ]
 }

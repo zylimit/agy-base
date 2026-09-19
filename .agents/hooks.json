@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .agents/harness/hook-handlers.js pre-tool-check",
+            "command": "node harness/hook-handlers.js pre-tool-check",
             "timeout": 15
           }
         ]
@@ -22,7 +22,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .agents/harness/hook-handlers.js post-tool-check",
+            "command": "node harness/hook-handlers.js post-tool-check",
             "timeout": 15
           }
         ]
@@ -34,7 +34,7 @@
     "PreInvocation": [
       {
         "type": "command",
-        "command": "node .agents/harness/hook-handlers.js pre-invocation",
+        "command": "node harness/hook-handlers.js pre-invocation",
         "timeout": 10
       }
     ]
@@ -44,7 +44,7 @@
     "Stop": [
       {
         "type": "command",
-        "command": "node .agents/harness/hook-handlers.js stop-gate",
+        "command": "node harness/hook-handlers.js stop-gate",
         "timeout": 10
       }
     ]
