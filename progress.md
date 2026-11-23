@@ -1,35 +1,50 @@
-# Project Progress & Memory State
+# Progress
 
-## 当前状态
-- **阶段**: 全生命周期精益工程体系顶规重构完成 (Full Lifecycle Lean Engineering Complete)
-- **最新里程碑**: 融合 `cc-base` 与 `codex-base` 全流程精华，落地“五大避免过度（过度设计、过度测试、过度检视、过度防御、过度可信）”精益防线。
+agy-base 的项目记忆。本仓 = cc-base 原件 + Antigravity 适配层，cc-base 侧的决策不在这里重记，看 cc-base 的 progress.md；这里只记适配层与同步相关的事。v2.2.0-legacy（独立引擎时代）的记忆原样留在 progress.archive.md。
 
-## 已完成事项
-- [x] **前半流程（需求、设计、架构、DFX、规划、领域治理）顶规重构**：
-  - 需求工程 `product-spec-builder`（四种话标注、交互四档、业务四条线、纠正传播）；
-  - 视觉与交互 `design-brief-builder` & `design-maker`（Google DESIGN.md Tokens、双遍法、八态、单文件零依赖离线 HTML 原型）；
-  - 架构与 DFX `arch-designer` & `dfx-designer`（业务事件检验边界、STRIDE 威胁建模、FMEA 故障模式分析、module-catalog 分层防腐）；
-  - 开发规划 `dev-planner`（端到端垂直切片、先行研究任务退出条件）；
-  - 领域知识分诊 `domain-rulings`（四象限分诊法则、入库两问门槛、项目根 domain/ 库）。
-- [x] **后半流程（开发、测试、检视、缺陷修复、发布、收尾）精益工程重构**：
-  - **编码实现 (`dev-builder`)**：恪守 YAGNI，坚决避免过度设计（不写假想抽象层与多余包装，真重复才提取）与过度防御（Fail-Visible、严禁空 catch 与静默吞异常）；
-  - **独立写测 (`test-builder`)**：坚决避免过度测试（破除覆盖率虚荣、P0/P1/P2 风险定级、不测简单透传、用例老化退休）与镜像测试陷阱（预期值来源于独立规则或独立 Fixture）；
-  - **代码审查 (`code-review`)**：坚决避免过度检视（首审一次全量覆盖、单轮集中收敛、严格区分 Blocker 与建议、审查轮次上限 reviewRounds ≤ 2）；
-  - **对抗审查 (`adversarial-review`)**：落实 Blue（自证靶子）→ Red（四视角证伪攻击）→ Judge（主 Agent 凭证据裁决）红蓝对抗机制；
-  - **缺陷修复 (`bug-fixer`)**：严格执行 Red-Locks-The-Bug（红测先行锁定、亲见 fail、最小根因修复变绿、修根因不搞顺带重构、三次熔断防盲试）；
-  - **发布冒烟 (`release-builder`)**：坚决避免过度可信（构建成功 ≠ 系统存活，独立核验真实进程启动时间戳与 HTTP 冒烟探针）；
-  - **分支收尾 (`branch-finisher`)**：PR 模板规范（HUMAN/AGENT 明确分区）与 Worktree 零遗留清理。
-- [x] **全局规则与完整性验证**：
-  - 制定 `.agents/rules/lean-engineering.md`，将“五大避免过度”升格为团队硬规则；
-  - 升级 `AGENTS.md` 与 `GEMINI.md`，注入精益工程防线；
-  - 全量重新计算 `FRAMEWORK-MANIFEST.json`（93 个组件 SHA-256 认证）；
-  - 运行 `npm run doctor` 验证 100% PASS。
+## Pinned（必守）
 
-## 活跃硬约束
-- 铁律 1：所有 Subagent 派发必须走 fresh 实例，禁止 Subagent 再拉 Subagent（扁平编排）。
-- 铁律 2：任何修复必须遵循 Red-Locks-The-Bug（先加失败测试再修复）。
-- 铁律 3：客观证据优先，没有新鲜运行证据（Verification Evidence）严禁宣称完成。
-- 铁律 4：四种话严格分开标，未经证实的业务逻辑只能标 `[推断]` 或 `[待定]`。
-- 铁律 5：设计参照优先级：HTML 真实原型 > DESIGN.md > Design-Brief.md > Product-Spec.md。
-- 铁律 6：架构变更零容忍新增循环依赖，锁死架构 baseline。
-- 铁律 7：精益工程五大防线：避免过度设计、避免过度测试、避免过度检视、避免过度防御、避免过度可信。
+- `.claude/` 下的每个文件都是 cc-base 原件：不手改，要改回 cc-base 改完再同步。同步脚本按 cc-base **HEAD** 清单覆盖，手改必丢。
+- Antigravity 不读 `.claude/settings.json`，因此本仓保持 `.claude/settings.json` 为 cc-base 原版 exec form（Claude Code 可共存；`setup-agy.sh` 装到已有 Cursor string form 的项目时由 `setup.sh` 自动保持原形态）。
+- 本仓用根目录 `GEMINI.md`（不占 `AGENTS.md`），与 `cursor-base` 装入同一目标项目时零文件冲突。
+- `.agents/agents/` 是生成物（`gen-agents.mjs`），`model: inherit` + Antigravity 规范内部工具名白名单；钉模型只写 `.agents/agents-models.json`。
+- `.gitignore` 从 `/*` 起到 `# === Antigravity 适配层 ===` 之前与 cc-base 逐字相同，同步脚本核对，不同即退 1。
+- 新增任何适配层控制之前先在本机 `agy` 里实测证明它会响；拦不住 / 证不出的闸不进家底。
+- `.agents/tests/test-adapter.sh` 不碰所在仓的工作树：所有写操作均在 `mktemp` 副本里跑。
+
+## Done
+
+- 2026-11-24 **彻底淘汰旧版独立引擎并 100% 基于最新 cc-base 重建**：旧版打 tag `v2.2.0-legacy` 留档、旧 `progress.md` 归档至 `progress.archive.md`；同步基线 `cc-base 8e13f6c`（514 文件 + 8 生成子代理）；落地薄适配层（`GEMINI.md`、`.agents/rules/cc-base-claude.md`、`.agents/skills.json`、`.agents/hooks.json`、`.agents/scripts/gen-agents.mjs`、`.agents/scripts/hook-adapter.mjs`、`setup-agy.sh`、`sync-from-cc-base.sh`、`.agents/tests/test-adapter.sh`）。
+- 2026-11-24 **验收通过**：`.agents/tests/test-adapter.sh` 34/34 PASS（0 FAIL / 0 SKIP）；`setup-agy.sh` 装到空项目后真机 `agy -p` 端到端验证通过：自动内联 `.claude/CLAUDE.md`（SiteMaster 中文 + 七字段派单）✓；`SessionStart` 注入 `tier: standard` + 「🔒 CC框架核心铁律」✓；`.agents/skills.json` 挂载 cc-base 技能且原生隐藏 `release-builder` / `branch-finisher` ✓；`read_file .env` 被 `agy-secret-guard` 拦截 ✓；主 Agent `write_file src/main.ts` 被 `no-direct-code-guard` 拦截 ✓；`implementer` 子代理拉起并成功写入 `src/sub.ts` + 跑通 `node --check`（exit 0）+ `PostToolUse` 登记进 `.claude/.needs-review` ✓。
+
+## Decisions
+
+- 2026-11-24 **用 `GEMINI.md` 而非 `AGENTS.md` 作为宿主说明，用 `.agents/rules/cc-base-claude.md` 内联 `.claude/CLAUDE.md`**。依据：Antigravity 原生读 `GEMINI.md` 且支持 `@[CLAUDE.md](../../.claude/CLAUDE.md)` 自动内联（独立占一个 24 KB 规则槽，不与宿主说明争预算）；Cursor 只读 `AGENTS.md` 不读 `GEMINI.md`，这样 Claude Code / Cursor / Antigravity 三端可零冲突共存于同一目标项目。适用范围：本仓与 `setup-agy.sh`。取代：旧版 `AGENTS.md` + `GEMINI.md` 中英双写。
+- 2026-11-24 **`.agents/skills.json` 直接指向 `.claude/skills`，零复制**。依据：2026-11-24 `agy -p` 实测挂载全部 20 个模型可调技能，且原生遵守 `disable-model-invocation: true`（自动隐藏 `release-builder` 与 `branch-finisher`）。适用范围：`.agents/skills.json`。取代：旧版复制改写 18 个 skill（含多个 300B 空壳）。
+- 2026-11-24 **子代理 `tools:` 使用 Antigravity 规范内部工具名，并按 `disallowedTools` 硬裁剪**。依据：2026-11-24 `agy -p` 实测：① 不写 `tools:` 时子代理仅拿到只读工具；② 写 `create_file` 报 tool not found、写 CLI 展示名 `write_file`/`edit_file` 触发已知挂起 bug；③ 写 `view_file` / `write_to_file` / `replace_file_content` / `run_command` 稳定映射为 CLI 的 `read_file` / `write_file` / `edit_file` / `run_command` + `manage_task`；④ 含 `Bash` 禁令的 3 个记录员直接去掉 `run_command`，且所有子代理不给 `start_subagent`/`invoke_subagent`，由运行时硬禁。适用范围：`.agents/scripts/gen-agents.mjs`。取代：无（旧版无 `.agents/agents/`）。
+- 2026-11-24 **通过薄适配器 `hook-adapter.mjs` 桥接真 `.claude/hooks/*.mjs`，按 `lastUserInput` 区分主 Agent 与子代理**。依据：2026-11-24 `agy -p` 实测：Antigravity 全部 6 个事件均触发但 payload 无 `agent_id`，主 Agent 在工具/调用/停止事件中 `lastUserInput` 恒非空而子代理恒为 `""`；据此放行子代理的 `no-direct-code-guard` 与 `Stop`；`Stop` 同时校验 `fullyIdle !== false`、`terminationReason === 'NO_TOOL_CALL'` 与 `executionNum < 3`（实测 `continuationActive` 在当前 CLI 版本维持 `false`）；`PreToolUse` 就地补齐仓库级密钥读写拦截与发布命令 `force_ask`。适用范围：`.agents/hooks.json` 与 `.agents/scripts/hook-adapter.mjs`。取代：旧版 77 行空壳 `hook-handlers.js`。
+- 2026-11-24 **不接入 `harness-async-verify.mjs`（同步阻塞限制）**。依据：Antigravity `hooks.md` 明确所有 hook 均同步阻塞且 `PostToolUse` 不支持回注上下文，接入 300s 校验会卡死每次文件编辑。适用范围：`.agents/hooks.json`。取代：无。
+
+## 当前断点（2026-11-24）
+
+完成按最新 `cc-base`（`8e13f6c`）的 100% 重建、静态与适配层自测、真机 `agy -p` 端到端验收并提交入库。
+
+## TODO
+
+- [ ] #1 P3 交互模式（TUI）下确认 `SessionStart` 首次启动时 `lastUserInput` 与状态栏 `statusLine` 的实际显示效果。
+- [ ] #2 P3 Windows（PowerShell）下的 `setup-agy.ps1`——按需补充，目前支持 Mac / Linux 与 Git Bash。
+
+## In Progress
+
+- 无。
+
+## 明确不做（防过度工程）
+
+- 不在本仓改 `.claude/` 原件（含 `settings.json`）。
+- 不为 Antigravity 另写一套 skills / rules / feedback / 独立治理引擎。
+- 不复活旧 `v2.2.0-legacy` 的任何空壳部件（`arch-checker.js`、`dfx-validator.js`、`mcp_config.json`、`hook-handlers.js`）。
+
+## Notes
+
+- 在本仓跑 `bash .claude/tests/cases/run-all.sh` 时，`test-readable-arch-pages.sh` 末尾一条用例 `git archive f79fc5c` 依赖 `cc-base` 本仓自己的历史提交号，在衍生发行仓（`agy-base` / `cursor-base`）里该提交不存在属上游预期差异；其余全部套件应 100% 通过。
+

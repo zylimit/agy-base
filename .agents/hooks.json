@@ -1,50 +1,95 @@
 {
-  "security-gate": {
-    "enabled": true,
-    "PreToolUse": [
+  "cc-base-session": {
+    "SessionStart": [
       {
-        "matcher": "run_command|write_to_file",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node harness/hook-handlers.js pre-tool-check",
-            "timeout": 15
-          }
-        ]
+        "type": "command",
+        "command": "node scripts/hook-adapter.mjs SessionStart",
+        "timeout": 15
       }
     ]
   },
-  "arch-audit": {
-    "enabled": true,
-    "PostToolUse": [
-      {
-        "matcher": "write_to_file|replace_file_content|multi_replace_file_content",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node harness/hook-handlers.js post-tool-check",
-            "timeout": 15
-          }
-        ]
-      }
-    ]
-  },
-  "context-reminder": {
-    "enabled": true,
+  "cc-base-prompt": {
     "PreInvocation": [
       {
         "type": "command",
-        "command": "node harness/hook-handlers.js pre-invocation",
-        "timeout": 10
+        "command": "node scripts/hook-adapter.mjs PreInvocation",
+        "timeout": 5
       }
     ]
   },
-  "completion-gate": {
-    "enabled": true,
+  "cc-base-pre-tool": {
+    "PreToolUse": [
+      {
+        "matcher": "run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hook-adapter.mjs PreToolUse",
+            "timeout": 45
+          }
+        ]
+      },
+      {
+        "matcher": "read_file|view_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hook-adapter.mjs PreToolUse",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "write_file|edit_file|write_to_file|replace_file_content",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hook-adapter.mjs PreToolUse",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "invoke_subagent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hook-adapter.mjs PreToolUse",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+  "cc-base-post-tool": {
+    "PostToolUse": [
+      {
+        "matcher": "run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hook-adapter.mjs PostToolUse",
+            "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "write_file|edit_file|write_to_file|replace_file_content",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hook-adapter.mjs PostToolUse",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  },
+  "cc-base-stop": {
     "Stop": [
       {
         "type": "command",
-        "command": "node harness/hook-handlers.js stop-gate",
+        "command": "node scripts/hook-adapter.mjs Stop",
         "timeout": 10
       }
     ]
