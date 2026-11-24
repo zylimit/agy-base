@@ -16,6 +16,7 @@ agy-base 的项目记忆。本仓 = cc-base 原件 + Antigravity 适配层，cc-
 
 - 2026-11-24 **彻底淘汰旧版独立引擎并 100% 基于最新 cc-base 重建**：旧版打 tag `v2.2.0-legacy` 留档、旧 `progress.md` 归档至 `progress.archive.md`；同步基线 `cc-base 8e13f6c`（514 文件 + 8 生成子代理）；落地薄适配层（`GEMINI.md`、`.agents/rules/cc-base-claude.md`、`.agents/skills.json`、`.agents/hooks.json`、`.agents/scripts/gen-agents.mjs`、`.agents/scripts/hook-adapter.mjs`、`setup-agy.sh`、`sync-from-cc-base.sh`、`.agents/tests/test-adapter.sh`）。
 - 2026-11-24 **验收通过**：`.agents/tests/test-adapter.sh` 34/34 PASS（0 FAIL / 0 SKIP）；`setup-agy.sh` 装到空项目后真机 `agy -p` 端到端验证通过：自动内联 `.claude/CLAUDE.md`（SiteMaster 中文 + 七字段派单）✓；`SessionStart` 注入 `tier: standard` + 「🔒 CC框架核心铁律」✓；`.agents/skills.json` 挂载 cc-base 技能且原生隐藏 `release-builder` / `branch-finisher` ✓；`read_file .env` 被 `agy-secret-guard` 拦截 ✓；主 Agent `write_file src/main.ts` 被 `no-direct-code-guard` 拦截 ✓；`implementer` 子代理拉起并成功写入 `src/sub.ts` + 跑通 `node --check`（exit 0）+ `PostToolUse` 登记进 `.claude/.needs-review` ✓。
+- 2026-11-24 **补充跨仓软链技能说明**：实测指向 `workspaceDirs` 之外的 `.claude/skills/<名>` 软链默认被工作区边界跳过，启动带 `agy --add-dir <外部仓库>` 原生生效，已记入 `GEMINI.md`。
 
 ## Decisions
 

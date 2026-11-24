@@ -27,6 +27,7 @@
 - **`Stop` 的 `advise` 档不强制续跑**：`standard` / `fast` 档下 `stop-gate` 与 `three-file-sync-gate` 照常判定、记 `.claude/evidence/gate-block.log` 并打印到 stderr，但不返回 `decision: "continue"` 以免空耗一轮模型调用；`strict` 档（含改家底自动升档）真拦并强制续跑（适配器设 `executionNum < 3` 熔断防死循环）。
 - **子代理模型与能力约束**：`.agents/agents/` 由 `.agents/scripts/gen-agents.mjs` 生成，默认 `model: inherit` 跟主 Agent 走；要给某个角色钉模型写 `.agents/agents-models.json`（形如 `{"code-reviewer": "pro"}`，Antigravity 支持 `inherit` / `flash` / `pro`）。`disallowedTools` 含 `Bash` 的角色（`progress-recorder` / `feedback-observer` / `domain-recorder`）直接从 `tools:` 去掉 `run_command`，由运行时硬禁。定制角色复制一份改名即可，生成器只清理注释里源名等于自己文件名的失源文件。
 - **子代理无原生 `fork` 继承**：`feedback-observer`、`progress-recorder` 经 `invoke_subagent` 启动时始终是 fresh 上下文，主 Agent 派发时须把本轮用户原话、决策、约束或改动摘要完整写入 `Prompt`。
+- **指向仓库外的软链技能需加 `--add-dir`**：Antigravity 扫描项目级 skills 时有工作区边界保护（真实路径跳出 `workspaceDirs` 的软链默认跳过）。若 `.claude/skills/<名>` 是指到相邻共用仓库的软链，启动时加 `agy --add-dir <外部仓库路径>` 即可原生识别该技能并同步放通沙箱读写。
 - **权限与状态栏**：Antigravity 全局权限在 `~/.gemini/antigravity-cli/settings.json`（`Deny > Ask > Allow`）；仓库级密钥读写拦截由 `hook-adapter.mjs` 在 `PreToolUse` 就地守住，不依赖本机全局配置。如需底栏治理状态，可在 `~/.gemini/antigravity-cli/settings.json` 配置 `statusLine` 指向 `node .claude/scripts/statusline.mjs`。
 - **已知口子**：主 Agent 用 `run_command` 里的 shell 重定向写文件（`> file`、`tee`、`sed -i`）绕得过 `no-direct-code-guard`。这是闸的漏洞，不是许可：写业务代码一律派 `implementer`。
 
