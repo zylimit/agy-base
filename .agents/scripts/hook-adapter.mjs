@@ -181,6 +181,59 @@ function isSecretWritePath(rawPath, root) {
 // 对齐 cc-base settings.json permissions.ask（发布类 HIGH 档命令）
 const ASK_PUBLISH_RE = /(^|[\s;&|()])(gh\s+release\b|npm\s+publish\b|docker\s+push\b)/;
 
+/**
+ * 解析 `git commit` 实际作用的目标仓库根：
+ * 当命令显式通过 `git -C <dir> ... commit` 或前置 `cd <dir> && ... git commit` 切到另一座仓库提交时，
+ * pre-commit-check / auto-push 必须针对目标仓库执行（若目标仓装了 cc-base），绝不能误跑在当前会话的
+ * workspace 根上（2026-11-25 实测：在仓 A 会话内 `cd ../agy-base && git commit` 误触发仓 A 的
+ * readable-refresh 改写仓 A 工作树并误拦提交）。
+ */
+function unquoteShellArg(raw) {
+  const s = String(raw || '').trim();
+  if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) {
+    return s.slice(1, -1);
+  }
+  return s;
+}
+
+function expandHome(p) {
+  if (p === '~') return process.env.HOME || p;
+  if (p.startsWith('~/') && process.env.HOME) return path.join(process.env.HOME, p.slice(2));
+  return p;
+}
+
+function resolveGitCommitRoot(cmd, defaultRoot) {
+  const s = String(cmd || '');
+  if (!/\bgit\b[\s\S]*\bcommit\b/.test(s)) return defaultRoot;
+
+  let candidate = '';
+  const gitCMatch = /(?:^|[\s;&|()])git\s+-C\s+("[^"]+"|'[^']+'|\S+)[\s\S]*?\bcommit\b/.exec(s);
+  if (gitCMatch) {
+    candidate = unquoteShellArg(gitCMatch[1]);
+  } else {
+    const beforeCommit = s.split(/\bgit\b[\s\S]*?\bcommit\b/)[0] || '';
+    const cdRe = /(?:^|[\n;&|()])\s*cd\s+("[^"]+"|'[^']+'|[^;&|()\n]+?)\s*(?=$|[\n;&|()])/g;
+    let m;
+    while ((m = cdRe.exec(beforeCommit)) !== null) {
+      candidate = unquoteShellArg(m[1]);
+    }
+  }
+
+  if (!candidate) return defaultRoot;
+  const resolved = path.resolve(defaultRoot, expandHome(candidate));
+  if (!fs.existsSync(resolved)) return defaultRoot;
+
+  const top = spawnSync('git', ['-C', resolved, 'rev-parse', '--show-toplevel'], {
+    shell: false,
+    encoding: 'utf8',
+    timeout: 3000,
+  });
+  if (top.status === 0 && String(top.stdout || '').trim()) {
+    return path.resolve(String(top.stdout).trim());
+  }
+  return resolved;
+}
+
 // PreInvocation 去重：同一 conversationId 同一条 lastUserInput 只触发一次 detect-feedback-signal
 function shouldRunPromptCheck(root, conversationId, prompt) {
   const cid = String(conversationId || 'default');
@@ -307,14 +360,18 @@ function handlePreToolUse(root, ev) {
       tool_input: { command: cmd },
       ...agentFields,
     };
+    const commitRoot = resolveGitCommitRoot(cmd, root);
     const bashHooks = [
-      ['secret-exfil-guard', 5000],
-      ['dangerous-pkill-guard', 5000],
-      ['pre-commit-check', 30000],
-      ['kill-dev-ports', 10000],
+      ['secret-exfil-guard', root, 5000],
+      ['dangerous-pkill-guard', root, 5000],
+      ['pre-commit-check', commitRoot, 30000],
+      ['kill-dev-ports', root, 10000],
     ];
-    for (const [name, timeout] of bashHooks) {
-      const r = runClaudeHook(root, name, payload, timeout);
+    for (const [name, targetRoot, timeout] of bashHooks) {
+      if (targetRoot !== root && !fs.existsSync(path.join(targetRoot, '.claude', 'hooks', `${name}.mjs`))) {
+        continue;
+      }
+      const r = runClaudeHook(targetRoot, name, payload, timeout);
       const blockedJson = r.json.find((o) => o.decision === 'block');
       if (r.status === 2 || blockedJson) {
         emit({
@@ -365,11 +422,14 @@ function handlePostToolUse(root, ev) {
 
   if (toolName === 'run_command') {
     const cmd = String(args.CommandLine || args.command || '');
-    runClaudeHook(root, 'auto-push', {
-      tool_name: 'Bash',
-      tool_input: { command: cmd },
-      ...agentFields,
-    }, 15000);
+    const commitRoot = resolveGitCommitRoot(cmd, root);
+    if (commitRoot === root || fs.existsSync(path.join(commitRoot, '.claude', 'hooks', 'auto-push.mjs'))) {
+      runClaudeHook(commitRoot, 'auto-push', {
+        tool_name: 'Bash',
+        tool_input: { command: cmd },
+        ...agentFields,
+      }, 15000);
+    }
   } else if (toolName === 'write_file' || toolName === 'edit_file'
       || toolName === 'write_to_file' || toolName === 'replace_file_content') {
     const filePath = String(args.Path || args.path || args.file_path || args.TargetFile || '');

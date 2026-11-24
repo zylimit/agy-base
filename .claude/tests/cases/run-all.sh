@@ -174,7 +174,7 @@ if command -v node >/dev/null 2>&1; then
     #   test-ui-audit 在没有浏览器引擎的机器上 U5 只能 SKIPPED，套件按 golden 的约定退 3——
     #   「没跑」要在最后一行说出来，不让 CI 把它读成通过；其余几套不会退 3。
     #   分级由各套自己头部的 `# risk:` 决定：predev-lint 与 design-trace 是 high 天天跑，另三套 medium 进 CI。
-    for s in test-predev-lint.sh test-design-trace.sh test-ui-audit.sh test-plan-lint.sh test-ui-slop-scan.sh test-project-status.sh; do
+    for s in test-predev-lint.sh test-design-trace.sh test-ui-audit.sh test-page-shots.sh test-plan-lint.sh test-ui-slop-scan.sh test-project-status.sh; do
         PREDEV_RC=0
         run_test "$TESTS_DIR/$s" || PREDEV_RC=$?
         if [ "$PREDEV_RC" -eq 3 ]; then
@@ -360,6 +360,7 @@ for c in "$DIR"/*.sh; do
     [ "$(basename "$c")" = "run-all.sh" ] && continue
     [ "$(basename "$c")" = "test-harness.sh" ] && continue   # 已在第二段跑（只需 node，不需 claude CLI）
     [ "$(basename "$c")" = "test-skill-behavior.sh" ] && continue  # opt-in（RUN_LIVE_SKILL=1），默认不跑，单独执行
+    [ "$(basename "$c")" = "dev-flow-carries-readable-docs.sh" ] && continue  # opt-in（CCBASE_RUN_DEV_FLOW_CASE=1），一次约十五分钟、几美元，太贵，单独执行
     RAN=$((RAN+1))
     echo ""
     echo "----- 运行 case：$(basename "$c") -----"

@@ -206,6 +206,16 @@ chk "$(printf '%s' "$out_s_sub" | grep -q '"decision":"allow"' && printf '%s' "$
 out_tdd=$(run_ad PreToolUse "{\"cwd\":\"$HP\",\"workspacePaths\":[\"$HP\"],\"lastUserInput\":\"fix bug\",\"toolCall\":{\"name\":\"invoke_subagent\",\"args\":{\"TypeName\":\"implementer\",\"Role\":\"Bug Fix\",\"Prompt\":\"修复线上解析器 bug\"}}}")
 chk "$(printf '%s' "$out_tdd" | grep -q '"decision":"deny"' && echo 0 || echo 1)" "PreToolUse(invoke_subagent) strict 档未验红派 implementer 修 bug 被 tdd-gate 拦截" "deny" "$out_tdd"
 
+# 9. PreToolUse(run_command) 跨仓 git commit 不误跑当前 workspace 的 pre-commit-check
+printf 'function broken( {\n' >"$HP/bad.js"
+git -C "$HP" add bad.js
+OTHER_REPO=$(mktemp -d); TMPS="$TMPS $OTHER_REPO"
+git -C "$OTHER_REPO" init -q
+out_same=$(run_ad PreToolUse "{\"cwd\":\"$HP\",\"workspacePaths\":[\"$HP\"],\"lastUserInput\":\"u\",\"toolCall\":{\"name\":\"run_command\",\"args\":{\"CommandLine\":\"git commit -m x\"}}}")
+out_cd=$(run_ad PreToolUse "{\"cwd\":\"$HP\",\"workspacePaths\":[\"$HP\"],\"lastUserInput\":\"u\",\"toolCall\":{\"name\":\"run_command\",\"args\":{\"CommandLine\":\"cd $OTHER_REPO && git commit -m x\"}}}")
+out_gitc=$(run_ad PreToolUse "{\"cwd\":\"$HP\",\"workspacePaths\":[\"$HP\"],\"lastUserInput\":\"u\",\"toolCall\":{\"name\":\"run_command\",\"args\":{\"CommandLine\":\"git -C $OTHER_REPO commit -m x\"}}}")
+chk "$(printf '%s' "$out_same" | grep -q '"decision":"deny"' && printf '%s' "$out_cd" | grep -q '"decision":"allow"' && printf '%s' "$out_gitc" | grep -q '"decision":"allow"' && echo 0 || echo 1)" "跨仓 cd / git -C 提交不误跑当前仓的 pre-commit-check（本仓坏语法仍 deny）" "本仓 deny / 跨仓 cd allow / git -C allow" "same:${out_same:0:40} cd:$out_cd gitC:$out_gitc"
+
 echo "--- setup-agy：装到临时目录、保留冲突、清理失源、三端共存、dry-run"
 T=$(mktemp -d); TMPS="$TMPS $T"
 "$R/setup-agy.sh" "$T" >"$T.out1" 2>&1; rc=$?; TMPS="$TMPS $T.out1"

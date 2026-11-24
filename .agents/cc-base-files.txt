@@ -10,6 +10,7 @@
 .claude/agent-memory/code-reviewer/pattern_cross-platform-coverage-claims.md
 .claude/agent-memory/code-reviewer/pattern_ddl-facts-and-page-redaction.md
 .claude/agent-memory/code-reviewer/pattern_dedup-state-and-wrapper-check.md
+.claude/agent-memory/code-reviewer/pattern_drift-suggester-and-default-on-flow.md
 .claude/agent-memory/code-reviewer/pattern_evidence-ledger-attacks.md
 .claude/agent-memory/code-reviewer/pattern_frontmatter-shell-rewriters.md
 .claude/agent-memory/code-reviewer/pattern_handrolled-parser-needs-differential.md
@@ -37,6 +38,7 @@
 .claude/feedback/2026-11-08-no-location-guess-from-timezone.md
 .claude/feedback/2026-11-08-self-check-before-asking-release.md
 .claude/feedback/2026-11-24-acceptance-target-is-the-skill-not-generated-output.md
+.claude/feedback/2026-11-24-write-docs-carefully-and-let-hard-to-write-drive-module-split.md
 .claude/feedback/FEEDBACK-INDEX.md
 .claude/feedback/avoid-over-design-testing-review-trust-charter.md
 .claude/feedback/bash-var-rm-prompts-stall-background-agents.md
@@ -214,6 +216,7 @@
 .claude/rules/memory-systems.md
 .claude/rules/subagent-dispatch.md
 .claude/rules/workflow-orchestration.md
+.claude/scripts/collect-feedback-docs.mjs
 .claude/scripts/collect-feedback.sh
 .claude/scripts/design-trace.mjs
 .claude/scripts/doctor.sh
@@ -227,6 +230,7 @@
 .claude/scripts/hook-form.mjs
 .claude/scripts/install-githooks.ps1
 .claude/scripts/install-githooks.sh
+.claude/scripts/page-shots.mjs
 .claude/scripts/plan-archive.mjs
 .claude/scripts/plan-lint.sh
 .claude/scripts/predev-lint.mjs
@@ -279,6 +283,7 @@
 .claude/scripts/readable/sources/sql-do-block.mjs
 .claude/scripts/readable/sources/sql-index.mjs
 .claude/scripts/readable/sources/sql-lex.mjs
+.claude/scripts/readable/structure.mjs
 .claude/scripts/statusline.mjs
 .claude/scripts/supervisor.mjs
 .claude/scripts/test-age.mjs
@@ -356,6 +361,7 @@
 .claude/skills/test-builder/templates/test-scaffold.md
 .claude/tests/README.md
 .claude/tests/cases/bug-report-triggers-bug-fixer.sh
+.claude/tests/cases/dev-flow-carries-readable-docs.sh
 .claude/tests/cases/handover-docs-triggers-readable-docs.sh
 .claude/tests/cases/run-all.sh
 .claude/tests/cases/test-harness.sh
@@ -415,6 +421,7 @@
 .claude/tests/test-hooks-node.sh
 .claude/tests/test-hooks-settings.sh
 .claude/tests/test-installer-parity.ps1
+.claude/tests/test-page-shots.sh
 .claude/tests/test-plan-archive.sh
 .claude/tests/test-plan-lint.sh
 .claude/tests/test-predev-lint.sh

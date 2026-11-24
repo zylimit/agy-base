@@ -17,6 +17,7 @@ agy-base 的项目记忆。本仓 = cc-base 原件 + Antigravity 适配层，cc-
 - 2026-11-24 **彻底淘汰旧版独立引擎并 100% 基于最新 cc-base 重建**：旧版打 tag `v2.2.0-legacy` 留档、旧 `progress.md` 归档至 `progress.archive.md`；同步基线 `cc-base 8e13f6c`（514 文件 + 8 生成子代理）；落地薄适配层（`GEMINI.md`、`.agents/rules/cc-base-claude.md`、`.agents/skills.json`、`.agents/hooks.json`、`.agents/scripts/gen-agents.mjs`、`.agents/scripts/hook-adapter.mjs`、`setup-agy.sh`、`sync-from-cc-base.sh`、`.agents/tests/test-adapter.sh`）。
 - 2026-11-24 **验收通过**：`.agents/tests/test-adapter.sh` 34/34 PASS（0 FAIL / 0 SKIP）；`setup-agy.sh` 装到空项目后真机 `agy -p` 端到端验证通过：自动内联 `.claude/CLAUDE.md`（SiteMaster 中文 + 七字段派单）✓；`SessionStart` 注入 `tier: standard` + 「🔒 CC框架核心铁律」✓；`.agents/skills.json` 挂载 cc-base 技能且原生隐藏 `release-builder` / `branch-finisher` ✓；`read_file .env` 被 `agy-secret-guard` 拦截 ✓；主 Agent `write_file src/main.ts` 被 `no-direct-code-guard` 拦截 ✓；`implementer` 子代理拉起并成功写入 `src/sub.ts` + 跑通 `node --check`（exit 0）+ `PostToolUse` 登记进 `.claude/.needs-review` ✓。
 - 2026-11-24 **补充跨仓软链技能说明**：实测指向 `workspaceDirs` 之外的 `.claude/skills/<名>` 软链默认被工作区边界跳过，启动带 `agy --add-dir <外部仓库>` 原生生效，已记入 `GEMINI.md`。
+- 2026-11-25 **同步 `cc-base ce100eb` + 修复跨仓 `git commit` 误触发**：拉入 `readable-docs` 第四期（`page-shots.mjs`、`readable/structure.mjs`、`collect-feedback-docs.mjs` 等 521 文件），自动重生成 `.agents/agents/implementer.md`；`hook-adapter.mjs` 新增 `resolveGitCommitRoot` 识别 `cd <dir> && git commit` / `git -C <dir> commit`，避免误在当前会话仓库跑 `pre-commit-check` / `auto-push`（自测 35/35 PASS）。
 
 ## Decisions
 
@@ -26,9 +27,9 @@ agy-base 的项目记忆。本仓 = cc-base 原件 + Antigravity 适配层，cc-
 - 2026-11-24 **通过薄适配器 `hook-adapter.mjs` 桥接真 `.claude/hooks/*.mjs`，按 `lastUserInput` 区分主 Agent 与子代理**。依据：2026-11-24 `agy -p` 实测：Antigravity 全部 6 个事件均触发但 payload 无 `agent_id`，主 Agent 在工具/调用/停止事件中 `lastUserInput` 恒非空而子代理恒为 `""`；据此放行子代理的 `no-direct-code-guard` 与 `Stop`；`Stop` 同时校验 `fullyIdle !== false`、`terminationReason === 'NO_TOOL_CALL'` 与 `executionNum < 3`（实测 `continuationActive` 在当前 CLI 版本维持 `false`）；`PreToolUse` 就地补齐仓库级密钥读写拦截与发布命令 `force_ask`。适用范围：`.agents/hooks.json` 与 `.agents/scripts/hook-adapter.mjs`。取代：旧版 77 行空壳 `hook-handlers.js`。
 - 2026-11-24 **不接入 `harness-async-verify.mjs`（同步阻塞限制）**。依据：Antigravity `hooks.md` 明确所有 hook 均同步阻塞且 `PostToolUse` 不支持回注上下文，接入 300s 校验会卡死每次文件编辑。适用范围：`.agents/hooks.json`。取代：无。
 
-## 当前断点（2026-11-24）
+## 当前断点（2026-11-25）
 
-完成按最新 `cc-base`（`8e13f6c`）的 100% 重建、静态与适配层自测、真机 `agy -p` 端到端验收并提交入库。
+`agy-base` 已对齐至 `cc-base ce100eb`（2026-11-25），静态与适配层自测全过并已推送远端。
 
 ## TODO
 
