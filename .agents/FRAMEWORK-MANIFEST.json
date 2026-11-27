@@ -25,13 +25,13 @@
     },
     {
       "path": ".agents/scripts/doctor.mjs",
-      "sha256": "f1101e1c36145d6c310d52bff80973c8019e0fd67a2ff1d18b450a878e8d6e73",
-      "bytes": 27045
+      "sha256": "e07ca783ec0aba227bfc3083dec722935ab64307c2f6d2cf6104eef836d7fdf1",
+      "bytes": 27629
     },
     {
       "path": ".agents/scripts/gen-agents.mjs",
-      "sha256": "ae45c4b7b79929c3891f133ffcb439ec83f6318cf7dd8f005f5972b621f51850",
-      "bytes": 16372
+      "sha256": "41e9c064cb4e7e9997650ef65df855782c6f0fd15a30f9291dd76e87c1d9a72a",
+      "bytes": 16435
     },
     {
       "path": ".agents/scripts/hook-adapter.mjs",

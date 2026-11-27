@@ -328,6 +328,9 @@ function runSetupPs1StaticContract(repoRoot, psTestPath) {
     if (!/\$CcBase\s+-ne\s+''\s+-and\s+\$NoAutoCc/.test(setupText)) {
       throw new Error('setup.ps1 missing -CcBase / -NoAutoCc mutual exclusion guard');
     }
+    if (!/GetCommandLineArgs\(\)[\s\S]*?-ccontains/.test(setupText)) {
+      throw new Error('setup.ps1 missing raw GetCommandLineArgs() case-sensitive double-hyphen flag guard');
+    }
     if (!/\$arg\.StartsWith\('-'\)[\s\S]{0,80}Exit-Usage/.test(setupText)) {
       throw new Error('setup.ps1 missing unknown -* option Exit-Usage guard');
     }
@@ -605,8 +608,10 @@ function main() {
       const relevant = diag
         .replace(/\r\n/g, '\n')
         .split('\n')
-        .filter((l) => /^(?:\s*not ok\b|\s*#\s|\s*Error:|\s*AssertionError|\s*actual:|\s*expected:|\s*operator:|\s*at\s)/.test(l))
-        .slice(0, 60);
+        .filter((l) =>
+          /^(?:\s*not ok\b|\s*#\s|\s*Error:|\s*error:|\s*AssertionError|\s*location:|\s*failureType:|\s*code:|\s*actual:|\s*expected:|\s*operator:|\s*stack:|\s*at\s|\s+\S.*(?:\(file:\/\/|\.m?js:\d+))/.test(l),
+        )
+        .slice(0, 80);
       const dump = relevant.length > 0 ? relevant.join('\n') : diag.slice(0, 2500);
       if (dump.trim()) {
         process.stderr.write(`--- failure output: ${item.name} (exit ${r.status}) ---\n${dump}\n`);

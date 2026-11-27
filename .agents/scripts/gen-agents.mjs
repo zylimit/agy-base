@@ -49,11 +49,11 @@ export function detachSymlinkSafe(targetPath) {
   const lst = safeLstat(targetPath);
   if (!lst || !lst.isSymbolicLink()) return false;
   if (process.platform === 'win32') {
+    // On Windows, file/dangling symlinks make rmdirSync throw ENOENT/ENOTDIR — always fall through to unlinkSync.
     try {
       fs.rmdirSync(targetPath);
       return true;
-    } catch (e) {
-      if (e && e.code === 'ENOENT') return false;
+    } catch {
       try {
         fs.unlinkSync(targetPath);
         return true;

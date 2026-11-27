@@ -180,6 +180,36 @@ function resolveAgyCli() {
   return null;
 }
 
+function probeCliVersion(binPath) {
+  if (!binPath || String(binPath).includes('"')) return '';
+  try {
+    const vr = process.platform === 'win32' && /\.(?:cmd|bat)$/i.test(binPath)
+      ? spawnSync(
+          process.env.ComSpec || 'cmd.exe',
+          ['/d', '/s', '/c', `""${binPath}" --version"`],
+          {
+            shell: false,
+            windowsHide: true,
+            windowsVerbatimArguments: true,
+            encoding: 'utf8',
+            timeout: 5000,
+          },
+        )
+      : spawnSync(binPath, ['--version'], {
+          shell: false,
+          windowsHide: true,
+          encoding: 'utf8',
+          timeout: 5000,
+        });
+    if (!vr.error && vr.stdout) {
+      return String(vr.stdout).trim().split(/\r?\n/)[0] || '';
+    }
+  } catch {
+    /* ignore */
+  }
+  return '';
+}
+
 function hasAgentsDir(dirPath) {
   try {
     return fs.statSync(path.join(dirPath, '.agents')).isDirectory();
@@ -699,16 +729,7 @@ export function runDoctor(rawTarget, { jsonMode = false, sourceCheck = false } =
 
   const agyCli = resolveAgyCli();
   if (agyCli) {
-    let ver = '';
-    const vr = spawnSync(agyCli.bin, ['--version'], {
-      shell: false,
-      windowsHide: true,
-      encoding: 'utf8',
-      timeout: 5000,
-    });
-    if (!vr.error && vr.stdout) {
-      ver = String(vr.stdout).trim().split(/\r?\n/)[0] || '';
-    }
+    const ver = probeCliVersion(agyCli.bin);
     ok(`Antigravity CLI 可用（${agyCli.name}${ver ? ': ' + ver : ''}）`);
   } else {
     note('未检测到 agy CLI（按序探测 agy / antigravity / antigravity-cli，可能仅使用 Antigravity App/IDE）；仅提示不判红');

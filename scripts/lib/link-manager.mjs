@@ -74,12 +74,12 @@ export function unlinkSymlinkOrJunctionSafe(absLink) {
     throw new Error(`拒绝以拆链方式删除物理非链接路径：${absLink}`);
   }
   if (process.platform === 'win32') {
-    // On Windows, NTFS Junctions are directory reparse points: prefer non-recursive rmdirSync, fallback to unlinkSync.
+    // On Windows, NTFS Junctions are directory reparse points (use rmdirSync), while file/dangling symlinks
+    // make rmdirSync throw ENOENT/ENOTDIR — always fall through to unlinkSync before treating ENOENT as absent!
     try {
       fs.rmdirSync(absLink);
       return true;
-    } catch (e) {
-      if (e && e.code === 'ENOENT') return false;
+    } catch {
       try {
         fs.unlinkSync(absLink);
         return true;

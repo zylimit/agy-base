@@ -45,6 +45,63 @@ $AllowedForwardFlags = @(
   '--write', '--check', '--leak', '--print', '--json', '--strict-syntax', '-h', '--help'
 )
 
+# Intercept raw '--*' arguments from [Environment]::GetCommandLineArgs() before PowerShell 7 '-File'
+# silently binds typos like '--dryrun' or '--DryRun' to switch parameters such as -DryRun.
+$rawCli = [Environment]::GetCommandLineArgs()
+if ($rawCli -and $rawCli.Length -gt 1) {
+  $fileFlagRe = if ([System.IO.Path]::DirectorySeparatorChar -eq '\') { '^[-/](?:f|file)$' } else { '^-(?:f|file)$' }
+  $cmdFlagRe = if ([System.IO.Path]::DirectorySeparatorChar -eq '\') { '^[-/](?:c|command|e|ec|encodedcommand)$' } else { '^-(?:c|command|e|ec|encodedcommand)$' }
+  $scriptLeaf = ([string]$PSCommandPath -split '[\\/]')[-1]
+  $sawFileFlag = $false
+  $rawStartIdx = -1
+  for ($idx = 1; $idx -lt $rawCli.Length; $idx++) {
+    $tok = [string]$rawCli[$idx]
+    if ($tok -imatch $fileFlagRe -and ($idx + 1) -lt $rawCli.Length) {
+      $sawFileFlag = $true
+      $candLeaf = ([string]$rawCli[$idx + 1] -split '[\\/]')[-1]
+      if (-not $scriptLeaf -or ($candLeaf -ieq $scriptLeaf)) {
+        $rawStartIdx = $idx + 2
+      }
+      break
+    }
+  }
+  if (-not $sawFileFlag -and $rawStartIdx -lt 0 -and $scriptLeaf) {
+    for ($idx = 1; $idx -lt $rawCli.Length; $idx++) {
+      $tok = [string]$rawCli[$idx]
+      if ($tok -imatch $cmdFlagRe) {
+        break
+      }
+      $tokLeaf = ([string]$tok -split '[\\/]')[-1]
+      if ($tokLeaf -ne '' -and $tokLeaf -ieq $scriptLeaf) {
+        $rawStartIdx = $idx + 1
+        break
+      }
+    }
+  }
+  if ($rawStartIdx -ge 0 -and $rawStartIdx -lt $rawCli.Length) {
+    for ($ri = $rawStartIdx; $ri -lt $rawCli.Length; $ri++) {
+      $ra = [string]$rawCli[$ri]
+      if ($ra -eq '--') {
+        break
+      }
+      if (
+        ($ra -imatch '^-(?:Target|CcBase|BundleCc|Out)$') -or
+        ($ra -ceq '--target' -or $ra -ceq '--cc-base' -or $ra -ceq '--bundle-cc' -or $ra -ceq '--out')
+      ) {
+        if (($ri + 1) -lt $rawCli.Length -and -not ([string]$rawCli[$ri + 1]).StartsWith('-')) {
+          $ri++
+        }
+        continue
+      }
+      if ($ra.StartsWith('--')) {
+        if (-not (($AllowedForwardFlags -ccontains $ra) -or ($ra -cmatch '^--(target|cc-base|bundle-cc|out)='))) {
+          Exit-Usage "unknown option: $ra"
+        }
+      }
+    }
+  }
+}
+
 $forwardArgs = New-Object System.Collections.Generic.List[string]
 $resolvedCmd = ''
 $resolvedTarget = $Target
