@@ -1,0 +1,19 @@
+{
+  "name": "agy-base",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Zero-copy cross-platform adapter linking cc-base (.claude/) to Antigravity (.agents/) across Windows PowerShell, WSL, Linux, and macOS.",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "install:target": "node scripts/agy-base.mjs install",
+    "doctor": "node .agents/scripts/doctor.mjs --source-check",
+    "manifest": "node scripts/agy-base.mjs manifest --write",
+    "manifest:check": "node scripts/agy-base.mjs manifest --check",
+    "pack-check": "node scripts/agy-base.mjs pack-check",
+    "test": "node .agents/tests/run-all.mjs --level high",
+    "test:all": "node .agents/tests/run-all.mjs --level all"
+  }
+}

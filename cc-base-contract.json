@@ -1,0 +1,56 @@
+{
+  "contractVersion": 1,
+  "upstream": "cc-base",
+  "claudeDir": ".claude",
+  "requiredFiles": [
+    ".claude/CLAUDE.md"
+  ],
+  "requiredDirs": [
+    ".claude/rules",
+    ".claude/skills",
+    ".claude/agents",
+    ".claude/hooks"
+  ],
+  "skills": {
+    "dir": ".claude/skills",
+    "entryFile": "SKILL.md",
+    "minCount": 15
+  },
+  "agents": {
+    "dir": ".claude/agents",
+    "requiredRoles": [
+      "code-reviewer",
+      "deployer",
+      "domain-recorder",
+      "evolution-runner",
+      "feedback-observer",
+      "implementer",
+      "progress-recorder",
+      "tester"
+    ]
+  },
+  "hooks": {
+    "dir": ".claude/hooks",
+    "requiredScripts": [
+      "check-evolution.mjs",
+      "session-rules-banner.mjs",
+      "recap-on-dirty.mjs",
+      "detect-feedback-signal.mjs",
+      "secret-exfil-guard.mjs",
+      "dangerous-pkill-guard.mjs",
+      "pre-commit-check.mjs",
+      "kill-dev-ports.mjs",
+      "no-direct-code-guard.mjs",
+      "tdd-gate.mjs",
+      "auto-push.mjs",
+      "mark-review-needed.mjs",
+      "record-authorship.mjs",
+      "stop-gate.mjs",
+      "three-file-sync-gate.mjs"
+    ]
+  },
+  "installers": {
+    "posix": "setup.sh",
+    "win32": "setup.ps1"
+  }
+}

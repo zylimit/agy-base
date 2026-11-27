@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "engine": "agy-base",
+  "seeded": [],
+  "files": [
+    {
+      "path": ".agents/.gitattributes",
+      "sha256": "3bcfb389ee1f46ae1d41d575e50ab30c82c6e924fbcb22dd06b5ea7c50b3bdfe",
+      "bytes": 73
+    },
+    {
+      "path": ".agents/.gitignore",
+      "sha256": "d7c76c0f212131dbb3a1cd5fa8241858cb09eefe0fa8605bbada80fe05739063",
+      "bytes": 123
+    },
+    {
+      "path": ".agents/rules/cc-base-agy-host.md",
+      "sha256": "10c9dffe3e40a2d1bb123d4dd2f65cf850154245c6b10358ee34bf0537c2617d",
+      "bytes": 5668
+    },
+    {
+      "path": ".agents/rules/cc-base-claude.md",
+      "sha256": "411116478c0351340fe8e80c682d7068ad1b133f9a772f413f9be95f87b5750d",
+      "bytes": 135
+    },
+    {
+      "path": ".agents/scripts/doctor.mjs",
+      "sha256": "f1101e1c36145d6c310d52bff80973c8019e0fd67a2ff1d18b450a878e8d6e73",
+      "bytes": 27045
+    },
+    {
+      "path": ".agents/scripts/gen-agents.mjs",
+      "sha256": "ae45c4b7b79929c3891f133ffcb439ec83f6318cf7dd8f005f5972b621f51850",
+      "bytes": 16372
+    },
+    {
+      "path": ".agents/scripts/hook-adapter.mjs",
+      "sha256": "67bdd3c213d98c4a8f722e222866259bffaf9f4a5fa9a45ed163d0a4fa1cdaae",
+      "bytes": 33453
+    },
+    {
+      "path": ".agents/scripts/ps-floor.mjs",
+      "sha256": "937c9b668353eabce165c7b0d71077e1f2251b17e77f22ada1067d9f6da74e8b",
+      "bytes": 51431
+    },
+    {
+      "path": ".agents/skills.json",
+      "sha256": "a8339dc0026d8011d03e5ce5eac907d7511ec2b54fd19e8d52a8f1a388d42e1a",
+      "bytes": 66
+    }
+  ]
+}

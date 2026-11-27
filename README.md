@@ -1,60 +1,92 @@
-# agy-base
+# agy-base (v3.0.0 Zero-Copy Link)
 
-cc-base 的 Antigravity（`agy` CLI / Antigravity App / IDE）发行版。cc-base 是一套给 Claude Code 用的产品开发框架——SiteMaster 人设、从需求到发布的全流程 Skill、主 Agent 只派单不编码的 Sub-Agent 模型、hook 闸门与三档位。本仓不另造第二套框架，直接保留 cc-base 原件为唯一真源，外包一层极薄的 `.agents/` 适配层：
+`cc-base` 的 **Antigravity（`agy` CLI / Antigravity App / IDE）纯软链（Zero-Copy Link）跨平台发行版**，原生支持 Windows PowerShell、WSL、Linux 与 macOS。
+
+自 `v3.0.0` 起，`agy-base` 彻底告别在仓库中重复拷贝 500+ 个 `.claude/` 文件与手工运行 `sync-from-cc-base.sh` 的旧模式，升级为对齐 `cac-base-link` 的**零拷贝桥接 + 三层解耦自动联装 + 零根文件侵入**架构：
 
 ```text
 agy-base/
-├── .claude/                   # cc-base 原件（CLAUDE.md / rules / skills / agents / hooks / scripts / tests …，零手改）
 ├── .agents/
 │   ├── rules/
-│   │   └── cc-base-claude.md  # always_on 规则，用 @[CLAUDE.md](../../.claude/CLAUDE.md) 原生内联主控规则
-│   ├── skills.json            # 直接指向 .claude/skills（零复制，含 disable-model-invocation 原生生效）
-│   ├── agents/                # 从 .claude/agents/*.md 生成：model: inherit + tools 白名单 + 正文补齐
-│   ├── agents-models.json     # 可选：给某个角色钉模型写这里（如 {"code-reviewer":"pro"}），默认全 inherit
-│   ├── hooks.json             # Antigravity 原生生命周期钩子，经 hook-adapter.mjs 桥接到真 .claude/hooks/*.mjs
+│   │   ├── cc-base-claude.md     # always_on：通过 @[CLAUDE.md](../../.claude/CLAUDE.md) 原生内联主控宪法
+│   │   └── cc-base-agy-host.md   # always_on：Antigravity 宿主差异与桥接协议（< 6 KB，零截断、零根文件侵入）
+│   ├── skills.json               # 指向 .claude/skills（与 .agents/skills OS 软链/Junction 构成双保险）
+│   ├── hooks.json                # Antigravity 生命周期钩子，无损合并保留用户自定义非 cc-base-* 块
 │   ├── scripts/
-│   │   ├── gen-agents.mjs     # 子代理生成器（幂等、清失源、保定制）
-│   │   └── hook-adapter.mjs   # 协议双向翻译器（camelCase <-> snake_case、密钥读写拦截、子代理放行、Stop 熔断）
-│   ├── tests/                 # 适配层自测（不装进目标项目）
-│   ├── cc-base-files.txt      # 上次同步的 cc-base 清单（同步脚本写，据此删 cc-base 已没有的文件）
-│   └── cc-base-version.txt    # 上次同步的 cc-base 提交与日期
-├── GEMINI.md                  # Antigravity 宿主说明：只写宿主差异（不占 AGENTS.md，与 cursor-base 共存零冲突）
-├── setup.sh / setup.ps1       # cc-base 原件的安装器
-├── setup-agy.sh               # 装到目标项目：setup.sh + 铺 .agents/ 与 GEMINI.md
-├── sync-from-cc-base.sh       # 从 cc-base HEAD 同步原件并重新生成 .agents/agents
-├── docs/                      # cc-base 原件
-├── progress.md                # 本仓的项目记忆
-├── progress.archive.md        # 旧独立引擎时代（v2.2.0-legacy）的 progress 归档
-└── README.md
+│   │   ├── hook-adapter.mjs      # 双向协议适配器（SessionStart 自愈、外层 .git 隔离、/release-builder 补位）
+│   │   ├── gen-agents.mjs        # 按需从 .claude/agents/*.md 生成子代理并写 agents-gen.sha256 指纹
+│   │   ├── ps-floor.mjs          # Bash + PowerShell + CMD 双壳危险命令与密钥外传地板闸
+│   │   └── doctor.mjs            # 双模健康体检（--source-check 源仓 / 下游目标项目，支持 --json）
+│   └── FRAMEWORK-MANIFEST.json   # 受管文件 LF-SHA256 清单（engine: "agy-base", seeded: []）
+├── scripts/
+│   ├── agy-base.mjs              # 零依赖跨平台事务安装器 CLI 内核（install/upgrade/uninstall/doctor/manifest/pack-check/release）
+│   └── lib/                      # path-guard / link-manager / cc-dep / hooks-merge / manifest
+├── cc-base-contract.json         # 对上游 cc-base (.claude/) 的能力契约声明
+├── setup.ps1                     # Windows PowerShell 5.1+ / pwsh 7+ 薄壳入口（纯 7-bit ASCII 无 BOM）
+├── setup.sh                      # WSL / Linux / macOS / Git Bash 薄壳入口
+└── setup-agy.sh                  # 向后兼容薄壳（透传至 setup.sh）
 ```
 
-## 要求
+## 环境要求
 
-- Node.js 22 或更新（hook 与适配脚本都是 `.mjs`，单运行时）
-- Git
-- Antigravity CLI（`agy`）或 Antigravity App / IDE
+- **Node.js >= 20.0.0**（零 npm 外部依赖，纯内置模块）
+- **Git**
+- **Antigravity CLI（`agy`）** 或 **Antigravity App / IDE**
 
-## 装到一个项目
+## 快速安装到目标项目
+
+### Linux / macOS / WSL / Git Bash
 
 ```sh
-git clone https://github.com/zylimit/agy-base.git
-cd agy-base
+./setup.sh /path/to/your-project
+# 向后兼容旧命令：
 ./setup-agy.sh /path/to/your-project
 ```
 
-装完进项目目录启动 `agy`：
-- `.claude/CLAUDE.md` 经 `.agents/rules/cc-base-claude.md` 自动内联生效；
-- `.claude/skills/*` 经 `.agents/skills.json` 自动挂载（`release-builder` / `branch-finisher` 按 `disable-model-invocation: true` 仅限用户手动触发）；
-- 8 个子代理经 `.agents/agents/*.md` 自动发现（可在 `invoke_subagent` 中直接派发）；
-- 开场自动通过 `SessionStart` 注入「🔒 CC框架核心铁律」与当前档位。
+### Windows PowerShell
 
-**三端共存**：`.claude/` 原件零改动，且本仓用 `GEMINI.md` 不占 `AGENTS.md`，同一个目标项目可同时使用 Claude Code、Cursor（`cursor-base`）与 Antigravity（`agy-base`）互不冲突。
+```powershell
+pwsh -File .\setup.ps1 -Target D:\path\to\your-project
+```
 
-**拉框架更新或重装之后，退出 `agy` 重开一个新会话**，让新配置、技能、子代理与 hooks 生效。
+### 三层解耦 `cc-base` 自动寻源联装
 
-### 可选：接通 CLI 状态栏
+安装器内置三层上游 `cc-base` 协调策略，无需手工分两步拷贝：
 
-Antigravity CLI 支持自定义 `statusLine`（且 stdin JSON 字段与 Claude Code 兼容）。如需在底栏常驻显示 tier / 待审数 / 上下文占比，可在 `~/.gemini/antigravity-cli/settings.json` 加：
+1. **Tier 1（复用 / 按需同升）**：若目标目录已有满足 `cc-base-contract.json` 的 `.claude/`，直接零拷贝复用并建立桥接；传 `--with-cc`（PowerShell `-WithCc`）可同步升级 `.claude/`。
+2. **Tier 2（一步自动联装）**：若目标缺少 `.claude/` 且未传 `--no-auto-cc`，按优先级 `--cc-base <dir>` → `<agy-base>/.bundled-cc-base` → `$CC_BASE_DIR` → `../cc-base` 自动寻源并调用上游 `setup.ps1` / `setup.sh` 一步装齐 `.claude/` + `.agents/`。
+3. **Tier 3（延迟自愈）**：若传 `--no-auto-cc`（或 `AGY_NO_AUTO_CC=1`）或当前环境暂无 `cc-base` 源，先干净装入 `.agents/` 桥接壳（退出码 `0`）；后续装好 `cc-base` 后启动 `agy`，`SessionStart` 钩子自动毫秒级补建 `.agents/skills` 软链/Junction 并生成 `.agents/agents/*.md`。
+
+### 常用维护与发布命令
+
+```sh
+# 预览安装计划（零文件写入）
+./setup.sh /path/to/your-project --dry-run
+
+# 升级适配层（连带升级上游 cc-base 加 --with-cc；强制覆盖本地冲突加 --force）
+./setup.sh upgrade /path/to/your-project
+
+# 下游项目健康体检
+node /path/to/your-project/.agents/scripts/doctor.mjs
+
+# 安全卸载（仅摘除 .agents/ 受管内容与软链，绝不触碰 .claude/ 一字节！）
+./setup.sh --uninstall /path/to/your-project
+
+# 源仓自检门禁
+node scripts/agy-base.mjs pack-check
+
+# 打单包离线合包制品（内置 .bundled-cc-base，内网离线机器一键双装）
+node scripts/agy-base.mjs release v3.0.0 --bundle-cc ../cc-base --out /tmp/agy-base-v3.0.0-offline.tar.gz
+```
+
+## 四端同仓零冲突共存与 v2 平滑迁移
+
+- **根目录零文件侵入**：宿主适配说明已由根级 `GEMINI.md` 迁入 `.agents/rules/cc-base-agy-host.md`（`trigger: always_on`）。同一目标项目可同时挂载 Claude Code（`cc-base`）、Cursor（`cursor-base`）、CodeAgent（`cac-base-link`）与 Antigravity（`agy-base`），根目录干干净净、互不干扰。
+- **旧版 v2 自动平滑迁移**：在装过 `agy-base` v2.x 的项目上运行 `setup`，若检测到旧版框架生成的 `GEMINI.md`，会自动归档至 `.agents/.runtime/migrated-v2-<ts>/GEMINI.md` 并清理 `.agents/cc-base-*.txt`；用户自己手写的 `GEMINI.md` 绝不触碰。
+
+## 可选：接通 CLI 状态栏
+
+如需在 Antigravity CLI 底栏常驻显示当前档位（tier）、待审文件数与上下文占比，可在 `~/.gemini/antigravity-cli/settings.json` 配置：
 
 ```json
 {
@@ -65,25 +97,7 @@ Antigravity CLI 支持自定义 `statusLine`（且 stdin JSON 字段与 Claude C
 }
 ```
 
-## Antigravity 下跟 Claude Code 的差异
+## 历史版本留档
 
-全在 [GEMINI.md](GEMINI.md)，装进目标项目后就在项目根。要点：
-- Hook 经 `.agents/hooks.json` + `hook-adapter.mjs` 桥接到 `.claude/hooks/*.mjs`；
-- `UserPromptExpansion` / `PreCompact` / `PostCompact` / `Notification` / `SubagentStop` 五个事件宿主没有；
-- `PostToolUse` 同步且不能回注上下文，不接 `harness-async-verify.mjs`；
-- 子代理默认 `model: inherit`，要钉模型写 `.agents/agents-models.json`；`feedback-observer` / `progress-recorder` 无原生 fork，派发时把上下文摘要写进 `Prompt`。
-
-## 跟 cc-base 同步
-
-```sh
-./sync-from-cc-base.sh /path/to/cc-base
-bash .claude/tests/cases/run-all.sh
-bash .agents/tests/test-adapter.sh
-git add -A && git commit
-```
-
-同步按 cc-base HEAD 清单覆盖原件，重写 `.agents/agents/` 与同步记录；不碰本仓的 `README.md`、`progress.md`、`progress.archive.md`、`.gitignore`、`GEMINI.md`、`.agents/` 和两个适配脚本。
-
-## 旧版本
-
-`v2.2.0-legacy` 之前的 `agy-base` 是一套脱离 `cc-base` 独立重写的脚手架（自定义 `arch-checker.js` / `dfx-validator.js` / 空壳 `hook-handlers.js`），2026-11-24 起停止维护并彻底淘汰，完整保留在 tag `v2.2.0-legacy`。
+- `v2.3.0-bundled-backup`：升级为 `v3.0.0` 纯软链架构前的最后一版内置 `.claude/` 拷贝快照。
+- `v2.2.0-legacy`：2026-11-24 前的早期独立重写引擎留档。

@@ -1,0 +1,14 @@
+skills
+skills/
+agents
+agents/
+.runtime/
+local/
+evidence/
+*.bak
+*.bak-*
+*.agy-new
+*.framework-new
+*.swp
+.DS_Store
+Thumbs.db
